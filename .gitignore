@@ -1,0 +1,10 @@
+BOOT/
+boot.catalog
+md5sum.txt
+source-files/.disk
+source-files/boot
+source-files/casper
+source-files/dists
+source-files/EFI
+source-files/install
+source-files/pool
