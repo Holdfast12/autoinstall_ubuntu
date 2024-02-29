@@ -8,3 +8,4 @@ source-files/dists
 source-files/EFI
 source-files/install
 source-files/pool
+*.iso
