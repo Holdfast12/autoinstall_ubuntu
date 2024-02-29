@@ -1,0 +1,226 @@
+#cloud-config
+autoinstall:
+  apt:
+    disable_components: []
+    fallback: abort
+    geoip: true
+    mirror-selection:
+      primary:
+      - uri: http://192.168.1.141:3142/ru.archive.ubuntu.com/ubuntu/
+      - country-mirror
+      - arches: &id001
+        - amd64
+        - i386
+        uri: http://192.168.1.141:3142/archive.ubuntu.com/ubuntu/
+      - arches: &id002
+        - s390x
+        - arm64
+        - armhf
+        - powerpc
+        - ppc64el
+        - riscv64
+        uri: http://192.168.1.141:3142/ports.ubuntu.com/ubuntu-ports
+    preserve_sources_list: false
+    security:
+    - arches: *id001
+      uri: http://192.168.1.141:3142/security.ubuntu.com/ubuntu/
+    - arches: *id002
+      uri: http://192.168.1.141:3142/ports.ubuntu.com/ubuntu-ports
+  codecs:
+    install: false
+  drivers:
+    install: false
+  identity:
+    hostname: ubuntu
+    password: $6$GfPMhGQoNKT4zTD0$8qNNuLtOV1yWV5lzHoMoHyHy4lzjIBWdR.D99gZ9updi6PB8eeonuM9WVqG7KvqPGpLnL2VfEULHoiqIbXHoz0
+    realname: Vagrant
+    username: vagrant
+  kernel:
+    package: linux-generic
+  keyboard:
+    layout: us,ru
+    toggle: alt_shift_toggle
+    variant: ','
+  locale: ru_RU.UTF-8
+  network:
+    ethernets:
+      enp0s3:
+        dhcp4: true
+    version: 2
+  oem:
+    install: auto
+  source:
+    id: ubuntu-server-minimal
+    search_drivers: true
+  ssh:
+    allow-pw: true
+    authorized-keys: []
+    install-server: true
+  storage:
+    config:
+    - ptable: msdos
+      path: /dev/sda
+      wipe: superblock-recursive
+      preserve: false
+      name: ''
+      grub_device: true
+      id: disk-sda
+      type: disk
+    - device: disk-sda
+      size: 1073741824
+      wipe: superblock
+      number: 1
+      preserve: false
+      grub_device: false
+      offset: 1048576
+      path: /dev/sda1
+      id: partition-0
+      type: partition
+    - fstype: ext4
+      volume: partition-0
+      preserve: false
+      id: format-0
+      type: format
+    - device: disk-sda
+      size: 74087137280
+      wipe: superblock
+      number: 2
+      preserve: false
+      grub_device: false
+      offset: 1074790400
+      path: /dev/sda2
+      id: partition-1
+      type: partition
+    - name: rootvg
+      devices:
+      - partition-1
+      preserve: false
+      id: lvm_volgroup-0
+      type: lvm_volgroup
+    - name: root
+      volgroup: lvm_volgroup-0
+      size: 5368709120B
+      wipe: superblock
+      preserve: false
+      path: /dev/rootvg/root
+      id: lvm_partition-0
+      type: lvm_partition
+    - fstype: ext4
+      volume: lvm_partition-0
+      preserve: false
+      id: format-1
+      type: format
+    - path: /
+      device: format-1
+      id: mount-1
+      type: mount
+    - name: usr
+      volgroup: lvm_volgroup-0
+      size: 11811160064B
+      wipe: superblock
+      preserve: false
+      path: /dev/rootvg/usr
+      id: lvm_partition-1
+      type: lvm_partition
+    - fstype: ext4
+      volume: lvm_partition-1
+      preserve: false
+      id: format-2
+      type: format
+    - path: /usr
+      device: format-2
+      id: mount-2
+      type: mount
+    - name: var
+      volgroup: lvm_volgroup-0
+      size: 11811160064B
+      wipe: superblock
+      preserve: false
+      path: /dev/rootvg/var
+      id: lvm_partition-2
+      type: lvm_partition
+    - fstype: ext4
+      volume: lvm_partition-2
+      preserve: false
+      id: format-3
+      type: format
+    - path: /var
+      device: format-3
+      id: mount-3
+      type: mount
+    - name: tmp
+      volgroup: lvm_volgroup-0
+      size: 11811160064B
+      wipe: superblock
+      preserve: false
+      path: /dev/rootvg/tmp
+      id: lvm_partition-3
+      type: lvm_partition
+    - fstype: ext4
+      volume: lvm_partition-3
+      preserve: false
+      id: format-4
+      type: format
+    - path: /tmp
+      device: format-4
+      id: mount-4
+      type: mount
+    - name: opt
+      volgroup: lvm_volgroup-0
+      size: 11811160064B
+      wipe: superblock
+      preserve: false
+      path: /dev/rootvg/opt
+      id: lvm_partition-4
+      type: lvm_partition
+    - fstype: ext4
+      volume: lvm_partition-4
+      preserve: false
+      id: format-5
+      type: format
+    - path: /opt
+      device: format-5
+      id: mount-5
+      type: mount
+    - name: home
+      volgroup: lvm_volgroup-0
+      size: 5368709120B
+      wipe: superblock
+      preserve: false
+      path: /dev/rootvg/home
+      id: lvm_partition-5
+      type: lvm_partition
+    - fstype: ext4
+      volume: lvm_partition-5
+      preserve: false
+      id: format-6
+      type: format
+    - path: /home
+      device: format-6
+      id: mount-6
+      type: mount
+    - name: swap
+      volgroup: lvm_volgroup-0
+      size: 5368709120B
+      wipe: superblock
+      preserve: false
+      path: /dev/rootvg/swap
+      id: lvm_partition-6
+      type: lvm_partition
+    - fstype: swap
+      volume: lvm_partition-6
+      preserve: false
+      id: format-7
+      type: format
+    - path: ''
+      device: format-7
+      id: mount-7
+      type: mount
+    - path: /boot
+      device: format-0
+      id: mount-0
+      type: mount
+    swap:
+      size: 0
+  updates: security
+  version: 1
