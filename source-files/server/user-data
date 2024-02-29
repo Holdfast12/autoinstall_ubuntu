@@ -1,5 +1,8 @@
 #cloud-config
 autoinstall:
+  packages:
+  - vim
+  - i3
   apt:
     disable_components: []
     fallback: abort
@@ -83,9 +86,9 @@ autoinstall:
           =XKpA
           -----END PGP PUBLIC KEY BLOCK-----
   codecs:
-    install: false
+    install: true
   drivers:
-    install: false
+    install: true
   identity:
     hostname: ubuntu
     password: $6$GfPMhGQoNKT4zTD0$8qNNuLtOV1yWV5lzHoMoHyHy4lzjIBWdR.D99gZ9updi6PB8eeonuM9WVqG7KvqPGpLnL2VfEULHoiqIbXHoz0
