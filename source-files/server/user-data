@@ -2,7 +2,6 @@
 autoinstall:
   packages:
   - vim
-  - i3
   apt:
     disable_components: []
     fallback: abort
@@ -85,6 +84,9 @@ autoinstall:
           9f/ZjpTnNxlKtuKyXULMET5MIxzB
           =XKpA
           -----END PGP PUBLIC KEY BLOCK-----
+      winmanager:
+        source: deb [arch=amd64] http://192.168.1.141:3142/debian.sur5r.net/i3/ jammy universe
+        keyid: BFD90F4DAAEFA72B67BBAF48E3CA1A89941C42E6
   codecs:
     install: true
   drivers:
@@ -100,11 +102,13 @@ autoinstall:
     layout: us,ru
     toggle: alt_shift_toggle
     variant: ','
-  locale: ru_RU.UTF-8
+  locale: en_US.UTF-8
   network:
     ethernets:
       enp0s3:
-        dhcp4: true
+        # dhcp4: true
+        addresses: [192.168.1.142/24]
+        gateway4: 192.168.1.1
     version: 2
   oem:
     install: auto
